@@ -55,3 +55,57 @@ var lengthOfLongestSubstring = function(s) {
     return length;
 };
 
+// 2023-06-21
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    let set = new Set();
+    let maxSize = 0;
+    let left = 0;
+
+    for(let i = 0; i < s.length; i++ ) {
+        // if duplicate we delete something from set until no repeat
+        while(set.has(s[i])){
+            set.delete(s[left]);
+            left++;
+        }
+        set.add(s[i])
+        maxSize = Math.max(maxSize, i - left + 1)
+    }
+    return maxSize;
+};
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+    if(s.length == 1) {
+        return 1;
+    }
+    let longest = '';
+    let currentLongest = '';
+    for(let i = 0; i < s.length; i++) {
+        // Current Char as starting string
+        for( let j = i; j < s.length; j++) {
+            let currentChar = s.charAt(j);
+             //Is it repeated in the currentLongest
+            if(!currentLongest.includes(currentChar)) {
+                currentLongest += currentChar;
+            } else {
+                // We found duplicate and compare the current longest with Longest
+                if(currentLongest.length > longest.length) {
+                    longest = currentLongest;
+                }
+                currentLongest = ''
+                break;
+
+            }
+        }       
+    }
+    console.log(longest)
+    return longest.length;
+};
+
